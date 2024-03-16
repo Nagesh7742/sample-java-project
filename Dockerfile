@@ -1,11 +1,13 @@
-# Use a smaller base image for the final application image
-FROM openjdk:11-jre-slim
+# Use a base image with Java installed
+FROM openjdk:11
 
 # Set the working directory in the container
 WORKDIR /app
 
-# Copy the JAR file from the build stage to the final image
-COPY --from=build /app/target/sample-java-project-1.0-SNAPSHOT.jar .
+# Copy the Maven artifacts and executable JAR to the container
+COPY target/.jar /app/.jar
 
-# Set the default command to run the application
-CMD ["java", "-jar", "sample-java-project-1.0-SNAPSHOT.jar"]
+# Command to run the application
+CMD ["java", "-jar", ".jar"]
+
+
